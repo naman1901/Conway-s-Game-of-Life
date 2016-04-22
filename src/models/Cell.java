@@ -16,13 +16,14 @@ public class Cell extends JLabel {
 	private boolean oldState;
 	private boolean newState;
 	
+	final public static int CELL_SIZE = 10;
+	
 	
 	public Cell() {
 		oldState = newState = false;
 		this.setOpaque(true);
 		this.setBackground(Color.RED);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		this.setPreferredSize(new Dimension(10,10));
 		
 		this.addMouseListener(new MouseListener() {
 
@@ -82,6 +83,21 @@ public class Cell extends JLabel {
 		} else {
 			this.setBackground(Color.RED);
 		}
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(CELL_SIZE,CELL_SIZE);
+	}
+	
+	@Override
+	public Dimension getMinimumSize() {
+		return getPreferredSize();
+	}
+	
+	@Override
+	public Dimension getMaximumSize() {
+		return getPreferredSize();
 	}
 	
 }

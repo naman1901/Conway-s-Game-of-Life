@@ -15,8 +15,7 @@ public class Cell extends JLabel {
 
 	private boolean oldState;
 	private boolean newState;
-	
-	final public static int CELL_SIZE = 10;
+
 	
 	
 	public Cell() {
@@ -87,7 +86,7 @@ public class Cell extends JLabel {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(CELL_SIZE,CELL_SIZE);
+		return new Dimension(Constants.CELL_SIZE, Constants.CELL_SIZE);
 	}
 	
 	@Override

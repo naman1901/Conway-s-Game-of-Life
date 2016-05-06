@@ -7,20 +7,22 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 import models.Cell;
+import models.Constants;
 
 public class CellPanel extends JPanel {
-	
-	final public static int GRID_SIZE = 70;
 
-	Cell[][] cell = new Cell[GRID_SIZE][GRID_SIZE];
+	private Cell[][] cell = new Cell[Constants.GRID_SIZE][Constants.GRID_SIZE];
+	int iterations;
 	
 	public CellPanel() {
+		iterations = 0;
+		
 		int i, j;
 		GridBagLayout gbLayout = new GridBagLayout();
 		GridBagConstraints gbConstraints = new GridBagConstraints();
 		this.setLayout(gbLayout);
-		for(i=0;i<GRID_SIZE;i++) {
-			for(j=0;j<GRID_SIZE;j++) {
+		for(i=0;i<Constants.GRID_SIZE;i++) {
+			for(j=0;j<Constants.GRID_SIZE;j++) {
 				cell[i][j] = new Cell();
 				gbConstraints.gridx = i;
 				gbConstraints.gridy = j;
@@ -35,7 +37,7 @@ public class CellPanel extends JPanel {
 	
 	 @Override
      public Dimension getPreferredSize() {
-         return new Dimension(GRID_SIZE*Cell.CELL_SIZE, GRID_SIZE*Cell.CELL_SIZE);
+         return new Dimension(Constants.GRID_SIZE*Constants.CELL_SIZE, Constants.GRID_SIZE*Constants.CELL_SIZE);
      }
 
 	 @Override
@@ -46,6 +48,31 @@ public class CellPanel extends JPanel {
 	 @Override
 	 public Dimension getMinimumSize() {
 		 return getPreferredSize();
+	 }
+	 
+	 public Cell[][] getGrid() {
+		 return cell;
+	 }
+	 
+	 public int getIterations() {
+		 return iterations;
+	 }
+	 
+	 public int update() {
+		 int i, j;
+		 int count = 0;
+		 iterations++;
+		 for(i=0;i<Constants.GRID_SIZE;i++) {
+			 for(j=0;j<Constants.GRID_SIZE;j++) {
+				 cell[i][j].copyState();
+				 cell[i][j].setState();
+				 if(cell[i][j].getNewState()) {
+					 count++;
+				 }
+					 
+			 }
+		 }
+		 return count;
 	 }
 	
 }

@@ -1,12 +1,16 @@
 package layouts;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class StatsPanel extends JPanel {
 	
@@ -14,6 +18,7 @@ public class StatsPanel extends JPanel {
 	final public static int EVO_STAT = 2;
 	public final static int HORIZONTAL = 1;
 	public final static int VERTICAL = 2;	
+	
 	
 	StatContainer numCells, numEvo;
 	
@@ -28,6 +33,7 @@ public class StatsPanel extends JPanel {
 		
 	}
 	
+    
 	public void updateNumberOfCells(int num) {
 		numCells.setCount(num);
 	}
@@ -45,12 +51,18 @@ public class StatsPanel extends JPanel {
 			this.setLayout(new GridBagLayout());
 			GridBagConstraints gbConstraints = new GridBagConstraints();
 			gbConstraints.fill = GridBagConstraints.BOTH;
+			
 			JLabel whichLabel = new JLabel();
 			countLabel = new JLabel("0");
-			
 			if(which==CELL_STAT) {
 				whichLabel.setText("Number of Living Cells");
+				whichLabel.setForeground(Color.YELLOW);
+				whichLabel.setFont(new Font("", Font.BOLD, 25));
+				whichLabel.setBorder(new EmptyBorder(30,30,30,10));
 				this.add(whichLabel, gbConstraints);
+				countLabel.setForeground(Color.YELLOW);
+				countLabel.setFont(new Font("", Font.BOLD, 25));
+				countLabel.setBorder(new EmptyBorder(10,30,30,0));
 				gbConstraints.gridy = 1;
 				gbConstraints.gridheight = 2;
 				this.add(countLabel, gbConstraints);
@@ -59,11 +71,18 @@ public class StatsPanel extends JPanel {
 				gbConstraints.gridheight = 2;
 				this.add(countLabel, gbConstraints);	
 				whichLabel.setText("Number of Evolutions");
+				whichLabel.setForeground(Color.YELLOW);
+				whichLabel.setBorder(new EmptyBorder(30,30,30,10));
+				whichLabel.setFont(new Font("", Font.BOLD, 25));
 				gbConstraints.gridheight = 1;
 				gbConstraints.gridy = 2;
-				this.add(whichLabel, gbConstraints);			
+				this.add(whichLabel, gbConstraints);		
+				countLabel.setForeground(Color.YELLOW);
+				countLabel.setFont(new Font("", Font.BOLD, 25));
+				countLabel.setBorder(new EmptyBorder(10,30,30,30));
 			}
-			
+			Color custom = new Color(58,82,170);
+			this.setBackground(custom);
 		}
 		
 		public void setCount(int val) {

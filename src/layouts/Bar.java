@@ -16,7 +16,7 @@ public class Bar extends JPanel{
 	{
 		Color custom = new Color(58,82,170);
 		Count c = new Count();
-		Shape s = new Shape();
+		//Shape s = new Shape();
 		this.setBackground(custom);
 		JPanel title_panel = new JPanel();
 		JLabel title = new JLabel("CONWOY\'S GAME OF LIFE");
@@ -28,7 +28,7 @@ public class Bar extends JPanel{
 		this.add(title_panel);
 		this.add(c);
 	   
-		this.add(s);
+		//this.add(s);
 		
 	}
 }

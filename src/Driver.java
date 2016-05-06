@@ -40,22 +40,6 @@ public class Driver {
 //				panel.add(c[i][j]);
 //			}
 //		}
-		JButton button = new JButton();
-		button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(e.getSource()==button) {
-					int x;
-					x = (int) System.currentTimeMillis();
-					x%=100;
-					statPanel.updateNumberOfCells(x*2);
-					statPanel.updateNumberOfEvolutions(x);
-				}
-				
-			}
-			
-		});
 		
 		JButton start, stop;
 		start = new JButton();

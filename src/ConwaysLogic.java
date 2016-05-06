@@ -81,7 +81,7 @@ public class ConwaysLogic implements Runnable {
 					
 				}
 				Driver.updateGrid();
-				Thread.sleep(100);
+				Thread.sleep(200);
 			} catch(InterruptedException e) {
 				System.out.print(e.getMessage());
 			}

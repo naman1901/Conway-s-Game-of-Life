@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import models.Cell;
 import models.Constants;
 
-public class CellPanel extends JPanel {
+public class CellPanel extends JPanel implements Runnable {
 
 	private Cell[][] cell = new Cell[Constants.GRID_SIZE][Constants.GRID_SIZE];
 	int iterations;
@@ -74,5 +74,11 @@ public class CellPanel extends JPanel {
 		 }
 		 return count;
 	 }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

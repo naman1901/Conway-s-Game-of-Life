@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class background extends JPanel{
+public class Background extends JPanel{
 
-	public background()
+	public Background()
 	{
 		Color custom = new Color(58,82,170);
 		Color custom2 = new Color(0,48,255);

@@ -54,7 +54,7 @@ public class Cell extends JLabel implements Serializable {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				// Do nothing
 				
 			}
 			
@@ -73,6 +73,14 @@ public class Cell extends JLabel implements Serializable {
 		oldState = newState;
 	}
 	
+	public void setOldState(boolean oldState) {
+		this.oldState = oldState;
+	}
+
+	public void setNewState(boolean newState) {
+		this.newState = newState;
+	}
+
 	public void changeState(boolean state) {
 		newState = state;
 	}

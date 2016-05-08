@@ -21,6 +21,7 @@ import layouts.CellPanel;
 import layouts.StatsPanel;
 import logic.ConwaysLogic;
 import logic.SaveLoad;
+import models.Cell;
 
 public class Driver {
 	
@@ -183,6 +184,13 @@ public class Driver {
 		statPanel.updateNumberOfCells(count);
 		statPanel.updateNumberOfEvolutions(iterations);
 		
+	}
+	
+	
+	public static void loadFromFile(Cell c[][], int iterations) {
+		cellPanel.setGrid(c);
+		cellPanel.setIterations(iterations-1);
+		updateGrid();
 	}
 	
 }

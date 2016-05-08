@@ -12,13 +12,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import models.Constants;
+
 public class StatsPanel extends JPanel {
 	
-	final public static int CELL_STAT = 1;
-	final public static int EVO_STAT = 2;
-	public final static int HORIZONTAL = 1;
-	public final static int VERTICAL = 2;	
-	public final static int UNIT_SIZE = 5;
+	final private static int CELL_STAT = Constants.CELL_STAT;
+	final private static int EVO_STAT = Constants.EVO_STAT;
+	final private static int HORIZONTAL = Constants.HORIZONTAL;
+	final private static int VERTICAL = Constants.VERTICAL;	
+	final private static int UNIT_SIZE = Constants.SEGMENT_UNIT_SIZE;
+	final private static Color yellow = Constants.yellow;
+	final private static Color blue = Constants.blue;
 	
 	StatContainer numCells, numEvo;
 	
@@ -30,6 +34,8 @@ public class StatsPanel extends JPanel {
 		
 		this.add(numCells, BorderLayout.PAGE_START);
 		this.add(numEvo, BorderLayout.PAGE_END );
+		
+		this.setBackground(blue);
 		
 	}
 	
@@ -51,27 +57,27 @@ public class StatsPanel extends JPanel {
 			this.setLayout(new GridLayout(2,1));
 			
 			JLabel whichLabel = new JLabel();
+			whichLabel.setForeground(yellow);
+			whichLabel.setFont(new Font("", Font.BOLD, 25));
+			whichLabel.setBorder(new EmptyBorder(30,30,30,10));
+			whichLabel.setBackground(blue);
+			whichLabel.setOpaque(true);
 			counter = new CounterPanel();
 			
 			if(which==CELL_STAT) {
 				whichLabel.setText("Number of Living Cells");
-				whichLabel.setForeground(Color.YELLOW);
-				whichLabel.setFont(new Font("", Font.BOLD, 25));
-				whichLabel.setBorder(new EmptyBorder(30,30,30,10));
 				this.add(whichLabel);
 				counter.setBorder(new EmptyBorder(20,20,20,20));
 				this.add(counter);
 			}
 			else {	
 				whichLabel.setText("Number of Evolutions");
-				whichLabel.setForeground(Color.YELLOW);
-				whichLabel.setBorder(new EmptyBorder(30,30,30,10));
-				whichLabel.setFont(new Font("", Font.BOLD, 25));
 				this.add(counter);
 				this.add(whichLabel);		
 			}
-			Color custom = new Color(58,82,170);
-			this.setBackground(custom);
+			//Color custom = new Color(58,82,170);
+			this.setBackground(yellow);
+			this.setBorder(new EmptyBorder(10,10,10,10));
 		}
 		
 		public void setCount(int val) {
@@ -91,7 +97,7 @@ public class StatsPanel extends JPanel {
 				counter[i] = new Counter();
 				this.add(counter[i]);
 			}
-			this.setBackground(Color.YELLOW);
+			this.setBackground(yellow);
 			this.setOpaque(true);
 		}
 		
@@ -128,7 +134,7 @@ public class StatsPanel extends JPanel {
 
 		public Counter() {
 			
-			this.setBackground(Color.YELLOW);
+			this.setBackground(yellow);
 			this.setOpaque(true);
 			
 			this.setLayout(new GridBagLayout());
@@ -250,8 +256,6 @@ public class StatsPanel extends JPanel {
 	private class LCDSegment extends JLabel {
 		
 		Dimension d;
-		private Color onColor = new Color(58,82,170);
-		private Color offColor = Color.YELLOW;
 		
 		public LCDSegment(int orientation) {
 			if(orientation == VERTICAL) {
@@ -265,11 +269,11 @@ public class StatsPanel extends JPanel {
 		}
 		
 		public void switchOff() {
-			this.setBackground(offColor);
+			this.setBackground(yellow);
 		}
 		
 		public void switchOn() {
-			this.setBackground(onColor);
+			this.setBackground(blue);
 		}
 		
 		@Override 

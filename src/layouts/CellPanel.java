@@ -58,6 +58,20 @@ public class CellPanel extends JPanel implements Runnable {
 		 return iterations;
 	 }
 	 
+	 public void setGrid(Cell c[][]) {
+		 
+		 for(int i=0;i<Constants.GRID_SIZE;i++) {
+			 for(int j=0;j<Constants.GRID_SIZE;j++) {
+				 cell[i][j].changeState(c[i][j].getNewState());
+			 }
+		 }
+		 
+	 }
+	 
+	 public void setIterations(int iterations) {
+		 this.iterations = iterations;
+	 }
+	 
 	 public int update() {
 		 int i, j;
 		 int count = 0;

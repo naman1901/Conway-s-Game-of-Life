@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 
 import javax.swing.Box;
 import javax.swing.BorderFactory;
@@ -11,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-public class Cell extends JLabel {
+public class Cell extends JLabel implements Serializable {
 
 	private boolean oldState;
 	private boolean newState;

@@ -1,15 +1,20 @@
-package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.ObjectInputStream.GetField;
 
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,34 +24,61 @@ import javax.swing.border.EmptyBorder;
 
 import layouts.CellPanel;
 import layouts.StatsPanel;
-import logic.ConwaysLogic;
-import logic.SaveLoad;
 import models.Cell;
-
 public class Driver {
 	
 	private static JFrame frame;
 	private static CellPanel cellPanel;
 	private static StatsPanel statPanel;
 	private static ConwaysLogic logicThread;
-    static CellPanel[] panel;
-	static String[] user = new String[20];
+	
+    private static Cell cell = new Cell();
 	static int i = 0;
 	
 	public static void main(String args[]) {
+		
+		
 		frame = new JFrame();
+		frame.setVisible(true);
 		cellPanel = new CellPanel();
 		statPanel = new StatsPanel();
-		panel = new CellPanel[20];
+		
+		
+		
+		
 		frame.setLayout(new BorderLayout());
 		logicThread = new ConwaysLogic(cellPanel.getGrid());
 		logicThread.start();
+
+		
+	
+		
+		
+		JButton button = new JButton();
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==button) {
+					int x;
+					x = (int) System.currentTimeMillis();
+					x%=100;
+					statPanel.updateNumberOfCells(x*2);
+					statPanel.updateNumberOfEvolutions(x);
+				}
+				
+			}
+			
+		});
 		
 		JButton start, stop, save, load;
 		start = new JButton("BEGIN");
 		stop = new JButton("STOP");
 		save = new JButton("SAVE");
 		load = new JButton("LOAD");
+		JButton btn = new JButton("Save");
+		JTextField textfield = new JTextField(30);
+		
 		
 		Color avocado = new Color(86,130,3);
 		start.setBackground(avocado);
@@ -74,33 +106,26 @@ public class Driver {
 				}
 				else if(e.getSource() == load){
 					
-					for(int x=0;x<i;x++){
-							SaveLoad saver = new SaveLoad(panel[x]);
-							saver.save();
-							}
+					Load loader = new Load();
+					loader.save();
 						
 				}
 				else if(e.getSource() == save){
-					JFrame name = new JFrame();
-					
-					JTextField textfield = new JTextField("Enter your name: ");
-					user[i] = textfield.getText();
-					panel[i] = cellPanel;
-					i=i+1;
-					
-					name.add(textfield);
-					name.setSize(700,200);
-					name.setLocationRelativeTo(null);
-					name.setVisible(true);
+					Save saver = new Save(cellPanel.getGrid());
+					saver.save();
 				}
 			}
 			
 		};
 		
+		
+		
+		
 		start.addActionListener(startStopListener);
 		stop.addActionListener(startStopListener);
 		load.addActionListener(startStopListener);
 		save.addActionListener(startStopListener);
+	    
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	   	frame.setBounds(0,0,screenSize.width, screenSize.height);
@@ -175,6 +200,84 @@ public class Driver {
 		
 		frame.add(title_panel);
 		frame.setBackground(custom);	
+		
+		//frame.dispose();
+		Color color1 = new Color(247,247,57);
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension dim = tk.getScreenSize();
+		
+		JFrame welcome = new JFrame();
+		welcome.setVisible(true);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(color1);
+		panel.setOpaque(true);
+		
+		JLabel welcometitle = new JLabel("CONWAY's GAME OF LIFE",JLabel.CENTER);
+		welcometitle.setFont(new Font("",Font.BOLD,70));
+		welcometitle.setBorder(new EmptyBorder(100,0,0,0));
+		welcometitle.setForeground(custom);
+		
+		
+		int x = (int) dim.getWidth();
+		int y = (int) dim.getHeight();
+		
+		ImageIcon img = new ImageIcon("src/giphy2.gif");
+		JLabel label = new JLabel(img);
+        label.setBorder(new EmptyBorder(100,100,0,0));
+		panel.add(welcometitle);
+		panel.add(label);
+	    
+		JButton rules = new JButton("Rules");
+		rules.setFont(new Font("",Font.BOLD,30));
+		//rules.setBorder(new EmptyBorder(0,100,0,0));
+		rules.setContentAreaFilled(false);
+		//rules.setBackground(color1);
+		//rules.setOpaque(false);
+		ActionListener rulesListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getSource() == rules){
+					welcome.dispose();
+					JFrame rule = new JFrame("RULES");
+					JButton cont = new JButton("Continue?");
+					cont.setFont(new Font("",Font.BOLD,30));
+					JPanel panelr = new JPanel();
+					rule.setVisible(true);
+					rule.setSize(1600, 800);
+					rule.setLocationRelativeTo(null);
+					ImageIcon image = new ImageIcon("src/Capture.jpg");
+					JLabel img = new JLabel(image);
+					panelr.add(img);
+					panelr.add(cont);
+					rule.add(panelr);
+					ActionListener continueListener = new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							// TODO Auto-generated method stub
+							if(arg0.getSource() == cont){
+								rule.dispose();
+							}
+						}
+					};
+					cont.addActionListener(continueListener);
+					
+				}
+			}
+		};
+		rules.addActionListener(rulesListener);
+		panel.add(rules);
+		
+		
+		welcome.setSize(x,y);
+		welcome.add(panel);
+		
+	   //String mediaURL = "https://www.youtube.com/watch?v=NWfASBgBXLc";
+	   
+		
 	}
 
 	public static void updateGrid() {
@@ -184,13 +287,6 @@ public class Driver {
 		statPanel.updateNumberOfCells(count);
 		statPanel.updateNumberOfEvolutions(iterations);
 		
-	}
-	
-	
-	public static void loadFromFile(Cell c[][], int iterations) {
-		cellPanel.setGrid(c);
-		cellPanel.setIterations(iterations-1);
-		updateGrid();
 	}
 	
 }

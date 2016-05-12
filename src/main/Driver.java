@@ -3,6 +3,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +28,9 @@ import javax.swing.border.EmptyBorder;
 
 import layouts.CellPanel;
 import layouts.StatsPanel;
+import layouts.background;
 import models.Cell;
+import models.Constants;
 public class Driver {
 	
 	private static JFrame frame;
@@ -32,7 +38,7 @@ public class Driver {
 	private static StatsPanel statPanel;
 	private static ConwaysLogic logicThread;
 	
-    private static Cell cell = new Cell();
+    private static Cell[][] cell = new Cell[Constants.GRID_SIZE][Constants.GRID_SIZE];
 	static int i = 0;
 	
 	public static void main(String args[]) {
@@ -42,7 +48,7 @@ public class Driver {
 		frame.setVisible(true);
 		cellPanel = new CellPanel();
 		statPanel = new StatsPanel();
-		
+		JPanel title_panel = new JPanel();
 		
 		
 		
@@ -78,22 +84,60 @@ public class Driver {
 		load = new JButton("LOAD");
 		JButton btn = new JButton("Save");
 		JTextField textfield = new JTextField(30);
+		JButton reset = new JButton("RESET");
 		
 		
 		Color avocado = new Color(86,130,3);
-		start.setBackground(avocado);
-		stop.setBackground(avocado);
+		start.setBackground(Color.yellow);
+		stop.setBackground(Color.YELLOW);
 		save.setBackground(Color.YELLOW);
 		load.setBackground(Color.YELLOW);
-		start.setFont(new Font("", Font.PLAIN,20));
-		stop.setFont(new Font("", Font.PLAIN, 20));
-		save.setFont(new Font("", Font.BOLD, 30));
-		load.setFont(new Font("", Font.BOLD, 30));
-		start.setForeground(Color.WHITE);
-		stop.setForeground(Color.WHITE);
-		save.setBorder(new EmptyBorder(20,20,20,20));
-		load.setBorder(new EmptyBorder(20,20,20,20));
+		reset.setBackground(Color.YELLOW);
 		
+		start.setFont(new Font("", Font.BOLD,20));
+		stop.setFont(new Font("", Font.BOLD, 20));
+		save.setFont(new Font("", Font.BOLD, 20));
+		load.setFont(new Font("", Font.BOLD, 20));
+		reset.setFont(new Font("", Font.BOLD, 20));
+		
+		
+		save.setBorder(new EmptyBorder(15,15,15,15));
+		load.setBorder(new EmptyBorder(15,15,15,15));
+		reset.setBorder(new EmptyBorder(15,15,15,15));
+		start.setBorder(new EmptyBorder(15,15,15,15));
+		stop.setBorder(new EmptyBorder(15,15,15,15));
+		
+	    JPanel buttonpanel = new JPanel(new GridBagLayout());
+	    GridBagConstraints c = new GridBagConstraints();
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.gridx = 0;
+	    c.gridy = 0;
+	    buttonpanel.add(start,c);
+	    
+	   // c.fill = GridBagConstraints.HORIZONTAL;
+	    c.gridx = 2;
+	    c.gridy = 0;
+	    buttonpanel.add(stop,c);
+	    
+	    //c.fill = GridBagConstraints.HORIZONTAL;
+	    c.gridx = 1;
+	    c.gridy = 3;
+	    c.insets = new Insets(10, 0, 0, 0);
+	    buttonpanel.add(reset,c);
+	    
+	    c.gridx = 0;
+	    c.gridy = 4;
+	    //c.insets = new Insets(30, 0, 0, 0);
+	    buttonpanel.add(save,c);
+	    
+	    c.gridx = 2;
+	    c.gridy = 4;
+	    //c.insets = new Insets(30, 0, 0, 0);
+	    buttonpanel.add(load,c);
+        
+
+		
+	buttonpanel.setBackground(background.custom);
 		ActionListener startStopListener = new ActionListener() {
 
 			@Override
@@ -114,13 +158,16 @@ public class Driver {
 					Save saver = new Save(cellPanel.getGrid());
 					saver.save();
 				}
+				else if(e.getSource() == reset){
+					cellPanel.resetGrid(cell);
+				}
 			}
 			
 		};
 		
 		
 		
-		
+		reset.addActionListener(startStopListener);
 		start.addActionListener(startStopListener);
 		stop.addActionListener(startStopListener);
 		load.addActionListener(startStopListener);
@@ -131,8 +178,8 @@ public class Driver {
 	   	frame.setBounds(0,0,screenSize.width, screenSize.height);
 		frame.add(cellPanel, BorderLayout.LINE_START);
 		frame.add(statPanel, BorderLayout.LINE_END);
-		frame.add(start, BorderLayout.PAGE_START);
-		frame.add(stop, BorderLayout.PAGE_END);
+		//frame.add(start, BorderLayout.PAGE_START);
+		//frame.add(stop, BorderLayout.PAGE_END);
 		
 		frame.setResizable(true);
 		frame.addWindowListener(new WindowListener() {
@@ -185,7 +232,7 @@ public class Driver {
 		Color custom = new Color(58,82,170);
 		
 		//frame.setBackground(custom);
-		JPanel title_panel = new JPanel();
+		
 		JLabel title = new JLabel("CONWOY\'S GAME OF LIFE");
 		title.setForeground(Color.YELLOW);
 		title.setFont(new Font("", Font.BOLD, 65));
@@ -195,8 +242,7 @@ public class Driver {
 		
 		title_panel.add(title);
 		
-		title_panel.add(save);
-		title_panel.add(load);
+		
 		
 		frame.add(title_panel);
 		frame.setBackground(custom);	
@@ -270,7 +316,7 @@ public class Driver {
 		};
 		rules.addActionListener(rulesListener);
 		panel.add(rules);
-		
+		title_panel.add(buttonpanel);
 		
 		welcome.setSize(x,y);
 		welcome.add(panel);

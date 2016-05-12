@@ -254,7 +254,9 @@ public class Driver {
 				}
 				else if(e.getSource() == save) {
 					String name = JOptionPane.showInputDialog("Enter Name: ");
-					System.out.println("OK");
+					if(name == null) {
+						return;
+					}
 					int iterations = cellPanel.getIterations();
 					Cell[][] cells = cellPanel.getGrid();
 					int cellCount = cellPanel.getCellCount();

@@ -16,7 +16,7 @@ public class ConwaysLogic implements Runnable {
 	public ConwaysLogic() {
 		suspended = true;
 		active = true;
-		runSpeed = 100;
+		runSpeed = 200;
 	}
 	
 	@Override
@@ -85,6 +85,9 @@ public class ConwaysLogic implements Runnable {
 						else if((!cell[i][j].getOldState()) && (c==3)) {
 							cell[i][j].changeState(true);
 							noChanges = false;
+						}
+						else {
+							cell[i][j].changeState(cell[i][j].getOldState());
 						}
 					}
 					

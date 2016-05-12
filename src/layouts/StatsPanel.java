@@ -42,7 +42,7 @@ public class StatsPanel extends JPanel {
 	
 	public void addButtonPanel(JPanel buttonPanel) {
 
-		buttonPanel.setBorder(new EmptyBorder(50,10,50,10));
+		buttonPanel.setBorder(new EmptyBorder(10,10,10,10));
 		this.add(buttonPanel, BorderLayout.CENTER);
 		
 	}

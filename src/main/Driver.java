@@ -215,7 +215,7 @@ public class Driver {
 		reset.setBackground(Color.YELLOW);		
 		save.setBackground(Color.YELLOW);	
 		load.setBackground(Color.YELLOW);	
-		exit.setBackground(Color.YELLOW);
+		exit.setBackground(Color.YELLOW);	
 		
 		start.setFont(new Font("", Font.BOLD, 20));
 		stop.setFont(new Font("", Font.BOLD, 20));

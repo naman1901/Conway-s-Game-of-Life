@@ -11,10 +11,12 @@ public class ConwaysLogic implements Runnable {
 	Thread t;
 	boolean suspended;
 	boolean active;
+	int runSpeed;
 	
 	public ConwaysLogic() {
 		suspended = true;
 		active = true;
+		runSpeed = 100;
 	}
 	
 	@Override
@@ -94,7 +96,7 @@ public class ConwaysLogic implements Runnable {
 				}
 				else {
 					Driver.updateGrid();
-					Thread.sleep(100);
+					Thread.sleep(runSpeed);
 				}
 			} catch(InterruptedException e) {
 				System.out.print(e.getMessage());
@@ -120,5 +122,4 @@ public class ConwaysLogic implements Runnable {
 	public void deactivate() {
 		active = false;
 	}
-	
 }

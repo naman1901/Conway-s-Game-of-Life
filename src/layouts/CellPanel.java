@@ -12,7 +12,7 @@ import models.Constants;
 public class CellPanel extends JPanel implements Runnable {
 
 	private Cell[][] cell = new Cell[Constants.GRID_SIZE][Constants.GRID_SIZE];
-	int iterations;
+	static int iterations;
 	
 	public CellPanel() {
 		iterations = 0;
@@ -54,7 +54,7 @@ public class CellPanel extends JPanel implements Runnable {
 		 return cell;
 	 }
 	 
-	 public int getIterations() {
+	 public static int getIterations() {
 		 return iterations;
 	 }
 	 
@@ -63,6 +63,16 @@ public class CellPanel extends JPanel implements Runnable {
 		 for(int i=0;i<Constants.GRID_SIZE;i++) {
 			 for(int j=0;j<Constants.GRID_SIZE;j++) {
 				 cell[i][j].changeState(c[i][j].getNewState());
+			 }
+		 }
+		 
+	 }
+	 public void resetGrid(Cell[][] c){
+		 for(int i=0;i<Constants.GRID_SIZE;i++) {
+			 for(int j=0;j<Constants.GRID_SIZE;j++) {
+				 cell[i][j].setVisible(true);
+				 cell[i][j].changeState(false);
+					cell[i][j].setState();
 			 }
 		 }
 		 

@@ -6,11 +6,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
-import javax.swing.Box;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+
+import main.Driver;
 
 public class Cell extends JLabel implements Serializable {
 
@@ -32,6 +31,12 @@ public class Cell extends JLabel implements Serializable {
 				newState = !newState;
 				copyState();
 				setState();
+				if(newState) {
+					Driver.countUp();
+				}
+				else {
+					Driver.countDown();
+				}		
 			}
 
 			@Override

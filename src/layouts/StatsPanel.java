@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import models.Constants;
@@ -34,11 +35,17 @@ public class StatsPanel extends JPanel {
 		
 		this.add(numCells, BorderLayout.PAGE_START);
 		this.add(numEvo, BorderLayout.PAGE_END );
-		
+		this.setBorder(new EmptyBorder(10,10,10,10));
 		this.setBackground(blue);
 		
 	}
 	
+	public void addButtonPanel(JPanel buttonPanel) {
+
+		buttonPanel.setBorder(new EmptyBorder(50,10,50,10));
+		this.add(buttonPanel, BorderLayout.CENTER);
+		
+	}
     
 	public void updateNumberOfCells(int num) {
 		numCells.setCount(num);
@@ -46,6 +53,21 @@ public class StatsPanel extends JPanel {
 	
 	public void updateNumberOfEvolutions(int num) {
 		numEvo.setCount(num);
+	}
+	
+	@Override
+    public Dimension getPreferredSize() {
+        return new Dimension(320, Constants.GRID_SIZE*Constants.CELL_SIZE+120);
+    }
+	 
+	@Override
+	public Dimension getMaximumSize() {
+		return getPreferredSize();
+	}
+	 
+	@Override
+	public Dimension getMinimumSize() {
+		return getPreferredSize();
 	}
 	
 	private class StatContainer extends JPanel {
@@ -56,18 +78,18 @@ public class StatsPanel extends JPanel {
 			
 			this.setLayout(new GridLayout(2,1));
 			
-			JLabel whichLabel = new JLabel();
-			whichLabel.setForeground(yellow);
-			whichLabel.setFont(new Font("", Font.BOLD, 25));
-			whichLabel.setBorder(new EmptyBorder(30,30,30,10));
-			whichLabel.setBackground(blue);
+			JLabel whichLabel = new JLabel("",SwingConstants.CENTER);
+			whichLabel.setForeground(blue);
+			whichLabel.setFont(new Font("", Font.BOLD, 20));
+			whichLabel.setBorder(new EmptyBorder(10,10,10,10));
+			whichLabel.setBackground(yellow);
 			whichLabel.setOpaque(true);
 			counter = new CounterPanel();
+			counter.setBorder(new EmptyBorder(10,10,10,10));
 			
 			if(which==CELL_STAT) {
 				whichLabel.setText("Number of Living Cells");
 				this.add(whichLabel);
-				counter.setBorder(new EmptyBorder(20,20,20,20));
 				this.add(counter);
 			}
 			else {	
@@ -97,7 +119,7 @@ public class StatsPanel extends JPanel {
 				counter[i] = new Counter();
 				this.add(counter[i]);
 			}
-			this.setBackground(yellow);
+			this.setBackground(blue);
 			this.setOpaque(true);
 		}
 		
@@ -134,7 +156,7 @@ public class StatsPanel extends JPanel {
 
 		public Counter() {
 			
-			this.setBackground(yellow);
+			this.setBackground(blue);
 			this.setOpaque(true);
 			
 			this.setLayout(new GridBagLayout());
@@ -269,11 +291,11 @@ public class StatsPanel extends JPanel {
 		}
 		
 		public void switchOff() {
-			this.setBackground(yellow);
+			this.setBackground(blue);
 		}
 		
 		public void switchOn() {
-			this.setBackground(blue);
+			this.setBackground(yellow);
 		}
 		
 		@Override 

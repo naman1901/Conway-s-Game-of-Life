@@ -5,17 +5,20 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import models.Cell;
 import models.Constants;
 
-public class CellPanel extends JPanel implements Runnable {
+public class CellPanel extends JPanel {
 
 	private Cell[][] cell = new Cell[Constants.GRID_SIZE][Constants.GRID_SIZE];
-	static int iterations;
+	int iterations;
+	int cellCount;
 	
 	public CellPanel() {
 		iterations = 0;
+		cellCount = 0;
 		
 		int i, j;
 		GridBagLayout gbLayout = new GridBagLayout();
@@ -33,11 +36,13 @@ public class CellPanel extends JPanel implements Runnable {
 				this.add(cell[i][j], gbConstraints);
 			}
 		}
+		this.setBackground(Constants.blue);
+		this.setBorder(new EmptyBorder(0,20,0,10));
 	}
 	
 	 @Override
      public Dimension getPreferredSize() {
-         return new Dimension(Constants.GRID_SIZE*Constants.CELL_SIZE, Constants.GRID_SIZE*Constants.CELL_SIZE);
+         return new Dimension(Constants.GRID_SIZE*Constants.CELL_SIZE+50, Constants.GRID_SIZE*Constants.CELL_SIZE+120);
      }
 
 	 @Override
@@ -54,7 +59,7 @@ public class CellPanel extends JPanel implements Runnable {
 		 return cell;
 	 }
 	 
-	 public static int getIterations() {
+	 public int getIterations() {
 		 return iterations;
 	 }
 	 
@@ -63,16 +68,20 @@ public class CellPanel extends JPanel implements Runnable {
 		 for(int i=0;i<Constants.GRID_SIZE;i++) {
 			 for(int j=0;j<Constants.GRID_SIZE;j++) {
 				 cell[i][j].changeState(c[i][j].getNewState());
+				 cell[i][j].copyState();
+				 cell[i][j].setState();
 			 }
 		 }
 		 
 	 }
 	 public void resetGrid(Cell[][] c){
+		 cellCount = iterations = 0;
 		 for(int i=0;i<Constants.GRID_SIZE;i++) {
 			 for(int j=0;j<Constants.GRID_SIZE;j++) {
-				 cell[i][j].setVisible(true);
-				 cell[i][j].changeState(false);
-					cell[i][j].setState();
+				cell[i][j].setVisible(true);
+				cell[i][j].changeState(false);
+				cell[i][j].copyState();
+				cell[i][j].setState();
 			 }
 		 }
 		 
@@ -96,13 +105,24 @@ public class CellPanel extends JPanel implements Runnable {
 					 
 			 }
 		 }
+		 cellCount = count;
 		 return count;
 	 }
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	public int getCellCount() {
+		return cellCount;
+	}
+
+	public void setCellCount(int cellCount) {
+		this.cellCount = cellCount;
 	}
 	
+	public void countUp() {
+		cellCount++;
+	}
+	
+	public void countDown() {
+		cellCount--;
+	}
+	 
 }

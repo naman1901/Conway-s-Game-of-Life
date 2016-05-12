@@ -1,70 +1,60 @@
 package logic;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import layouts.CellPanel;
 import models.Cell;
+import models.SaveObject;
 
-public class Save {
+public class Save implements Runnable {
+
+	Thread t;
+	SaveObject s;
 	
-	private final Runnable save = new Runnable(){
+	@Override
+	public void run() {
 		
-		@Override
-		public void run(){
-			try {
-				saveGame();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+
+			System.out.println("Saving");
+			
+			Path currentRelativePath = Paths.get("");
+			String path = currentRelativePath.toAbsolutePath().toString();
+			
+			path += "\\save\\";
+			path += s.getName() + ".data";
+			
+			System.out.println("Current relative path is: " + path);
+			
+			File file = new File(path);
+			if(!file.exists()) {
+			    file.createNewFile();
+			} 
+			
+			FileOutputStream fout = new FileOutputStream(path);
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(s);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
-	};
-	private static ExecutorService executor = Executors.newFixedThreadPool(1);
-	
-	private Cell[][] panel1;
-	private String name1;
-	private int iterations1;
-	
-	public Save(CellPanel panel, String name, int iterations)
-	{
-		this.panel1 = panel.getGrid();
-		this.name1 = name;
-		this.iterations1 = iterations;
+	}
+
+	public Save() {
+		t = new Thread(this);
 	}
 	
-	public void save()
-	{
-		executor.submit(save);
-	}
-	public static void close(){
-		executor.shutdown();
-	}
-	private void saveGame() throws Exception
-	{
-		//JFrame grid = new JFrame();
-		//grid.setVisible(true);
-		//grid.setSize(700, 700);
-		//grid.add(panel1);
-		//grid.setTitle(name1);
-		//grid.setLocationRelativeTo(null);
-		//grid.pack();
-		
-		
-		//Save to a file
-		FileOutputStream fout = new FileOutputStream("file.txt");
-		ObjectOutputStream out = new ObjectOutputStream(fout);
-		
-		out.writeObject(panel1);
-		out.writeObject(name1);
-		out.write(iterations1);
-		
-		//out.flush();
-		//grid.setTitle("success");
-		
+	public void save(Cell[][] cells, String name, int iterations, int cellCount) {
+		s = new SaveObject(cells, name, iterations, cellCount);
+		t.start();
 	}
 	
 }

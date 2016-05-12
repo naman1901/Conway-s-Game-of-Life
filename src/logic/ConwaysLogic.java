@@ -1,5 +1,7 @@
 package logic;
 
+import javax.swing.JOptionPane;
+
 import main.Driver;
 import models.Cell;
 import models.Constants;
@@ -7,12 +9,10 @@ import models.Constants;
 public class ConwaysLogic implements Runnable {
 
 	Thread t;
-	Cell[][] cell;
 	boolean suspended;
 	boolean active;
 	
-	public ConwaysLogic(Cell[][] cell) {
-		this.cell = cell;
+	public ConwaysLogic() {
 		suspended = true;
 		active = true;
 	}
@@ -24,12 +24,14 @@ public class ConwaysLogic implements Runnable {
 		while(active) {
 			try { 
 				while(suspended && active) {
-					System.out.println("SUSPENDED");	
+					Thread.sleep(1);
 				}
 				if(!active) {
 					break;
 				}
-				System.out.println("WORKING:");
+				boolean noChanges = true;
+				//System.out.println("WORKING:");
+				Cell[][] cell = Driver.getGrid();
 				for(i=0;i<Constants.GRID_SIZE;i++) {
 					for(j=0;j<Constants.GRID_SIZE;j++) {
 						int l, r, t, b;
@@ -76,15 +78,24 @@ public class ConwaysLogic implements Runnable {
 						}
 						if((cell[i][j].getOldState()) && (c<2 || c>3)) {
 							cell[i][j].changeState(false);
+							noChanges = false;
 						}
 						else if((!cell[i][j].getOldState()) && (c==3)) {
 							cell[i][j].changeState(true);
+							noChanges = false;
 						}
 					}
 					
 				}
-				Driver.updateGrid();
-				Thread.sleep(100);
+				if(noChanges) {
+					suspended = true;
+					JOptionPane.showMessageDialog(null, "The grid is now stable!", "Conway's Game of Life", JOptionPane.INFORMATION_MESSAGE);
+					Driver.notifyStopped();
+				}
+				else {
+					Driver.updateGrid();
+					Thread.sleep(100);
+				}
 			} catch(InterruptedException e) {
 				System.out.print(e.getMessage());
 			}

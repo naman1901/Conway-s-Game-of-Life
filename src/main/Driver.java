@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -49,8 +48,6 @@ public class Driver {
 		
 		Color color1 = new Color(247,247,57);
 		Color custom = new Color(58,82,170);
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Dimension dim = tk.getScreenSize();
 		
 		WindowListener windowListener = new WindowListener() {
 
@@ -282,8 +279,6 @@ public class Driver {
 		
 		statPanel.addButtonPanel(buttonpanel);
 		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	   	frame.setBounds(0,0,screenSize.width, screenSize.height);
 		frame.add(cellPanel, BorderLayout.LINE_START);
 		frame.add(statPanel, BorderLayout.LINE_END);
 		//frame.add(start, BorderLayout.PAGE_START);

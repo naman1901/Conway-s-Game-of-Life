@@ -15,8 +15,6 @@ public class Cell extends JLabel implements Serializable {
 
 	private boolean oldState;
 	private boolean newState;
-
-	
 	
 	public Cell() {
 		oldState = newState = false;

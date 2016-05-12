@@ -1,6 +1,7 @@
 package logic;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -115,6 +116,7 @@ public class Load implements Runnable {
 			p.setGrid(obj.getCell());
 			p.setIterations(obj.getIterations());
 			p.setBorder(new EmptyBorder(0,20,0,20));
+			p.disableComponents();
 			name.setText(obj.getName());
 			
 			JPanel buttonPanel = new JPanel();

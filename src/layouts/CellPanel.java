@@ -3,6 +3,7 @@ package layouts;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,9 +30,6 @@ public class CellPanel extends JPanel {
 				cell[i][j] = new Cell();
 				gbConstraints.gridx = i;
 				gbConstraints.gridy = j;
-				gbConstraints.weightx = 0.5;
-				gbConstraints.weighty = 0.5;
-//				gbConstraints.fill = GridBagConstraints.BOTH;
 				cell[i][j].setVisible(true);
 				this.add(cell[i][j], gbConstraints);
 			}
@@ -123,6 +121,16 @@ public class CellPanel extends JPanel {
 	
 	public void countDown() {
 		cellCount--;
+	}
+	
+	public void disableComponents() {
+		for(int i=0;i<Constants.GRID_SIZE;i++) {
+			for(int j=0;j<Constants.GRID_SIZE;j++) {
+				for(MouseListener ml: cell[i][j].getMouseListeners()) {
+					cell[i][j].removeMouseListener(ml);
+				}
+			}
+		}
 	}
 	 
 }

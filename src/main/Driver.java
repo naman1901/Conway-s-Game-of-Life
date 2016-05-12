@@ -30,10 +30,10 @@ import layouts.StatsPanel;
 import logic.ConwaysLogic;
 import logic.Load;
 import logic.Save;
-import layouts.Background;
 import models.Cell;
 import models.Constants;
 import models.SaveObject;
+
 public class Driver {
 		
 	private static JFrame frame, welcome, rule;
@@ -231,7 +231,7 @@ public class Driver {
 	    buttonpanel.add(save);
 	    buttonpanel.add(load);
 	    buttonpanel.add(exit);
-	    buttonpanel.setBackground(Background.custom);
+	    buttonpanel.setBackground(custom);
 	
 		ActionListener buttonListener = new ActionListener() {
 
@@ -316,6 +316,8 @@ public class Driver {
 	
 	public static void loadGrid(SaveObject s) {
 		cellPanel.setGrid(s.getCell());
+		cellPanel.setCellCount(s.getCellCount());
+		cellPanel.setIterations(s.getIterations());
 		statPanel.updateNumberOfCells(s.getCellCount());
 		statPanel.updateNumberOfEvolutions(s.getIterations());
 	}
